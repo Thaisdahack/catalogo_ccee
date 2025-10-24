@@ -1,0 +1,37 @@
+import requests
+import pandas as pd
+import json
+
+# Endpoint base da API
+BASE_URL = "https://dadosabertos.ccee.org.br/api/3/action/datastore_search"
+
+# ID do dataset EXPOSICAO_FINANCEIRA_MENSAL 2025
+RESOURCE_ID = "7bbe9eb3-5a7c-4231-a041-b15d3e6a4916"
+
+# Parâmetros da requisição
+params = {
+    "resource_id": RESOURCE_ID,
+    "limit": 10000  
+}
+
+# Requisição GET à API
+response = requests.get(BASE_URL, params=params)
+data = response.json()
+
+# Verifica se a API respondeu corretamente
+if not data.get("success"):
+    raise Exception("Erro na consulta à API da CCEE")
+
+# Converte os registros para DataFrame
+records = data["result"]["records"]
+df = pd.DataFrame(records)
+
+print(df)
+
+# Mostra colunas disponíveis 
+print("Colunas disponíveis:")
+print(df.columns.tolist())
+
+# Salva DataFrame em CSV
+caminho = r"C:\Users\thais.dias\Documents\Way2\perda_rb_horario_2025.csv"
+df.to_csv(caminho, index=False, encoding='utf-8')
