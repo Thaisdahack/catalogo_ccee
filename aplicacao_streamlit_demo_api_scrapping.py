@@ -23,15 +23,63 @@ st.set_page_config(
 # =======================================
 # 🎛️ MENU LATERAL
 # =======================================
-menu = st.sidebar.radio(
-    "Navegação",
-    [
-        "🏠 Apresentação",
-        "📊 Painéis Power BI",
-        "📚 Sistema Self Service de Dados",
-        "⚙️ Opções Low Code"
-    ]
-)
+with st.sidebar:
+    st.markdown("""
+        <style>
+        /* ====== MENU LATERAL ====== */
+        section[data-testid="stSidebar"] {
+            background-color: #1A5276 !important;
+            padding: 1.2rem 1rem 2rem 1rem;
+        }
+        .sidebar-title {
+            font-size: 1.4rem !important;
+            font-weight: 700 !important;
+            color: #ffffff !important;
+            text-align: center !important;
+            margin-bottom: 0.8rem !important;
+        }
+        .sidebar-sub {
+            font-size: 0.9rem !important;
+            color: #D6EAF8 !important;
+            text-align: center !important;
+            margin-bottom: 1.5rem !important;
+        }
+        div[role="radiogroup"] > label {
+            background-color: #21618C !important;
+            border: 1px solid #2471A3 !important;
+            border-radius: 8px !important;
+            padding: 0.6rem 0.8rem !important;
+            margin-bottom: 0.5rem !important;
+            color: #ECF0F1 !important;
+            font-weight: 500 !important;
+            transition: all 0.2s ease-in-out;
+        }
+        div[role="radiogroup"] > label:hover {
+            background-color: #2E86C1 !important;
+            transform: scale(1.02);
+        }
+        div[role="radiogroup"] > label[data-baseweb="radio"]:has(input[checked]) {
+            background-color: #3498DB !important;
+            color: #ffffff !important;
+            font-weight: 600 !important;
+            box-shadow: 0 0 8px rgba(255,255,255,0.3);
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown('<div class="sidebar-title">⚡ Case CCEE</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-sub">Integração Low-Code e Dados Públicos</div>', unsafe_allow_html=True)
+    
+    menu = st.radio(
+        "Navegação",
+        [
+            "🏠 Apresentação",
+            "📊 Painéis Power BI",
+            "📚 Sistema Self Service de Dados",
+            "⚙️ Opções Low Code"
+        ],
+        label_visibility="collapsed"
+    )
 
 # =======================================
 # 💅 ESTILO VISUAL GERAL
@@ -61,7 +109,7 @@ h1, h2, h3, label, p, div { color: #1a5276 !important; }
 # 🏠 APRESENTAÇÃO
 # ===========================================================
 if menu == "🏠 Apresentação":
-    st.title("📘 Catálogo e Soluções Low-Code - Case CCEE")
+    st.title("📘 Catálogo e Soluções Low-Code - Way2")
 
     st.markdown("""
     Este aplicativo foi desenvolvido como parte de um **case técnico** para demonstrar a capacidade de integrar 
@@ -90,7 +138,7 @@ if menu == "🏠 Apresentação":
 # 📊 PAINÉIS POWER BI
 # ===========================================================
 elif menu == "📊 Painéis Power BI":
-    st.title("📊 Painéis Power BI - Case CCEE")
+    st.title("📊 Painéis Power BI ")
 
     st.markdown("""
     Nesta seção, estão listados os **painéis Power BI** desenvolvidos para o case, com base nas APIs e datasets da CCEE.
@@ -331,6 +379,8 @@ elif menu == "⚙️ Opções Low Code":
 
     Esta abordagem é ideal para fontes **com APIs abertas**, como o portal de **dados abertos da CCEE**.  
     O objetivo é permitir a coleta de múltiplos datasets de forma automatizada.
+    
+    **📋 Exemplo de função personalizada:**
 
     ```m
     let
@@ -366,7 +416,7 @@ elif menu == "⚙️ Opções Low Code":
 
     **✨ Benefícios:**
     - Automação completa dentro do Power BI  
-    - Atualizações agendadas via Gateway  
+    - Atualizações agendadas via Power BI Service  
     - Flexibilidade para novos datasets apenas com `resource_id`
 
     ---
