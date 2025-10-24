@@ -20,66 +20,114 @@ st.set_page_config(
     layout="wide"
 )
 
+
 # =======================================
-# 🎛️ MENU LATERAL
+# 🎨 MENU LATERAL COM LOGO E RODAPÉ FIXO
 # =======================================
 with st.sidebar:
     st.markdown("""
         <style>
-        /* ====== MENU LATERAL ====== */
         section[data-testid="stSidebar"] {
-            background-color: #1A5276 !important;
-            padding: 1.2rem 1rem 2rem 1rem;
-        }
-        .sidebar-title {
-            font-size: 1.4rem !important;
-            font-weight: 700 !important;
+            background-color: #0E3B61 !important;
             color: #ffffff !important;
+            padding: 0.8rem 1rem 1.2rem !important;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== LOGO ===== */
+        .sidebar-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0.5rem;
+            margin-bottom: 0.6rem;
+        }
+        .sidebar-logo img {
+            width: 110px;  /* 🔹 logo menor */
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        /* ===== TÍTULOS EM BRANCO ===== */
+        .sidebar-title {
+            font-size: 1.35rem !important;
+            font-weight: 700 !important;
+            color: #FFFFFF !important;  /* 🔹 branco */
             text-align: center !important;
-            margin-bottom: 0.8rem !important;
+            margin: 0.3rem 0 0.2rem 0 !important;
         }
         .sidebar-sub {
-            font-size: 0.9rem !important;
-            color: #D6EAF8 !important;
+            font-size: 0.95rem !important;
+            color: #FFFFFF !important;  /* 🔹 branco */
             text-align: center !important;
-            margin-bottom: 1.5rem !important;
+            margin-bottom: 1rem !important;
         }
+
+        /* ===== BOTÕES DO MENU ===== */
         div[role="radiogroup"] > label {
-            background-color: #21618C !important;
-            border: 1px solid #2471A3 !important;
-            border-radius: 8px !important;
-            padding: 0.6rem 0.8rem !important;
-            margin-bottom: 0.5rem !important;
-            color: #ECF0F1 !important;
-            font-weight: 500 !important;
+            background: transparent !important;
+            border: 1.5px solid #5DADE2 !important;
+            border-radius: 10px !important;
+            color: #FFFFFF !important;
+            padding: 0.65rem 0.9rem !important;
+            margin-bottom: 0.6rem !important;
+            font-weight: 600 !important;
             transition: all 0.2s ease-in-out;
         }
         div[role="radiogroup"] > label:hover {
-            background-color: #2E86C1 !important;
-            transform: scale(1.02);
+            border-color: #AED6F1 !important;
+            transform: scale(1.03);
         }
-        div[role="radiogroup"] > label[data-baseweb="radio"]:has(input[checked]) {
-            background-color: #3498DB !important;
-            color: #ffffff !important;
-            font-weight: 600 !important;
-            box-shadow: 0 0 8px rgba(255,255,255,0.3);
+        div[role="radiogroup"] > label:has(input[checked]) {
+            border-color: #AED6F1 !important;
+            background-color: rgba(173, 216, 230, 0.15) !important;
+        }
+        div[role="radiogroup"] > label, div[role="radiogroup"] > label * {
+            color: #FFFFFF !important;
+            fill: #FFFFFF !important;
+        }
+
+        /* ===== RODAPÉ ===== */
+        .sidebar-footer {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #A9CCE3;
+            margin-top: auto;
+            margin-bottom: 0.4rem;
+        }
+        .sidebar-footer a {
+            color: #76D7C4 !important;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .sidebar-footer a:hover {
+            text-decoration: underline;
         }
         </style>
     """, unsafe_allow_html=True)
 
-    st.markdown('<div class="sidebar-title">⚡ Case CCEE</div>', unsafe_allow_html=True)
+    # LOGO
+    st.markdown('<div class="sidebar-logo"><img src="logo.png"></div>', unsafe_allow_html=True)
+
+    # TÍTULO
+    st.markdown('<div class="sidebar-title">⚡ Case técnico Way2</div>', unsafe_allow_html=True)
     st.markdown('<div class="sidebar-sub">Integração Low-Code e Dados Públicos</div>', unsafe_allow_html=True)
-    
+
+    # MENU
     menu = st.radio(
         "Navegação",
-        [
-            "🏠 Apresentação",
-            "📊 Painéis Power BI",
-            "📚 Sistema Self Service de Dados",
-            "⚙️ Opções Low Code"
-        ],
-        label_visibility="collapsed"
+        ["🏠 Apresentação", "📊 Painéis Power BI", "📚 Sistema Self Service de Dados", "⚙️ Opções Low Code"],
+        label_visibility="collapsed",
+        index=0
     )
+
+    # RODAPÉ
+    st.markdown(
+        '<div class="sidebar-footer">Desenvolvido por <a href="https://www.linkedin.com/in/thais-helena-dias/" target="_blank">Thaís Dias</a></div>',
+        unsafe_allow_html=True
+    )
+
 
 # =======================================
 # 💅 ESTILO VISUAL GERAL
