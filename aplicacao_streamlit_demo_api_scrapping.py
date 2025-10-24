@@ -26,24 +26,17 @@ st.set_page_config(
 st.markdown("""
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <style>
-    /* ======= FUNDO CLARO ======= */
     [data-testid="stAppViewContainer"], [data-testid="stApp"], .stDataFrame, .stSelectbox, .stTextInput {
         background-color: #f9fafc !important;
         color: #2c3e50 !important;
     }
-
-    /* ======= TÍTULOS E TEXTOS ======= */
     h1, h2, h3, label, p, div {
         color: #1a5276 !important;
     }
-
-    /* ======= CONTAINER ======= */
     .block-container {
         padding-top: 2rem;
         padding-bottom: 2rem;
     }
-
-    /* ======= BOTÕES ======= */
     .stButton>button, .stDownloadButton>button {
         background-color: #2471A3 !important;
         color: #ffffff !important;
@@ -57,29 +50,21 @@ st.markdown("""
         background-color: #1A5276 !important;
         transform: scale(1.02);
     }
-
-    /* ======= INPUTS ======= */
     .stTextInput>div>div>input, .stSelectbox>div>div>div {
         background-color: white !important;
         color: #2c3e50 !important;
         border-radius: 8px !important;
         border: 1px solid #d6dbdf !important;
     }
-
-    /* ======= SELECTBOX (abrir lista clara) ======= */
     div[role="listbox"] {
         background-color: #ffffff !important;
         color: #2c3e50 !important;
     }
-
-    /* ======= DATATABLE ======= */
     [data-testid="stDataFrame"] table {
         background-color: #ffffff !important;
         color: #2c3e50 !important;
         border-radius: 8px !important;
     }
-
-    /* ======= ÍCONES ======= */
     .main-title {
         display: flex;
         align-items: center;
@@ -90,8 +75,6 @@ st.markdown("""
         font-size: 2em;
         color: #1a5276;
     }
-
-    /* ======= BOX INFORMATIVO ======= */
     .stAlert {
         border-radius: 8px !important;
         padding: 1rem !important;
@@ -102,12 +85,12 @@ st.markdown("""
 # =======================================
 # 🧭 CABEÇALHO
 # =======================================
-st.markdown("""
+st.html("""
 <div class="main-title">
     <i class="bi bi-journal-arrow-down"></i>
     <h1>Catálogo de Datasets CCEE</h1>
 </div>
-""", unsafe_allow_html=True)
+""")
 
 st.markdown("---")
 
@@ -119,7 +102,7 @@ for key in ["dados_cliente_confirmados", "nome", "email", "empresa"]:
         st.session_state[key] = None
 
 with st.form("form_cliente"):
-    st.markdown("### <i class='bi bi-person-badge'></i> Informações do Cliente", unsafe_allow_html=True)
+    st.html("<h3><i class='bi bi-person-badge'></i> Informações do Cliente</h3>")
     nome_input = st.text_input("👤 Nome completo", value=st.session_state.nome or "")
     email_input = st.text_input("📧 E-mail corporativo", value=st.session_state.email or "")
     empresa_input = st.text_input("🏢 Empresa", value=st.session_state.empresa or "")
@@ -157,7 +140,7 @@ df = carregar_dados()
 # =======================================
 # 🔍 FILTROS DE CONSULTA
 # =======================================
-st.markdown("### <i class='bi bi-funnel'></i> Filtros de consulta", unsafe_allow_html=True)
+st.html("<h3><i class='bi bi-funnel'></i> Filtros de consulta</h3>")
 
 nomes_dataset = sorted(df["nome"].dropna().unique())
 dataset_selecionado = st.selectbox(
@@ -189,7 +172,7 @@ st.markdown("---")
 # =======================================
 # 📥 DOWNLOAD AUTOMÁTICO (com Spinner)
 # =======================================
-st.markdown("### <i class='bi bi-cloud-arrow-down'></i> Baixar Datasets", unsafe_allow_html=True)
+st.html("<h3><i class='bi bi-cloud-arrow-down'></i> Baixar Datasets</h3>")
 
 arquivo_solicitacoes = os.path.join(os.getcwd(), "solicitacoes_clientes.csv")
 
@@ -217,7 +200,6 @@ def baixar_dataset_csv_direto(link: str):
     except Exception as e:
         return None, f"❌ Falha ao baixar CSV direto: {e}"
 
-# Exibir lista filtrada
 for idx, row in df_filtrado.iterrows():
     nome_dataset = row["nome"]
     link_dataset = row["link_original"]
@@ -274,7 +256,7 @@ st.markdown("---")
 # =======================================
 # 🔬 DEMONSTRAÇÃO: API FUNCIONAL
 # =======================================
-st.markdown("### <i class='bi bi-diagram-3'></i> Demonstração: Consulta à API da CCEE", unsafe_allow_html=True)
+st.html("<h3><i class='bi bi-diagram-3'></i> Demonstração: Consulta à API da CCEE</h3>")
 
 st.write("""
 Exemplo prático de integração direta com a API da **CCEE**, 
@@ -303,10 +285,11 @@ if st.button("🚀 Consultar dados (PLD Histórico Semanal)"):
                 st.error("⚠️ API respondeu, mas não retornou registros.")
         except Exception as e:
             st.error(f"❌ Erro ao consultar API: {e}")
+
 # =======================================
 # 🕷️ DEMONSTRAÇÃO: WEBSCRAPING PLD HORÁRIO
 # =======================================
-st.markdown("### <i class='bi bi-globe2'></i> Demonstração: Webscraping do PLD Horário (CCEE)", unsafe_allow_html=True)
+st.html("<h3><i class='bi bi-globe2'></i> Demonstração: Webscraping do PLD Horário (CCEE)</h3>")
 
 st.write("""
 Esta demonstração mostra como o webscraping automatizado coleta os valores do **PLD Horário**
@@ -318,7 +301,6 @@ st.info("""
 clicando nas datas disponíveis e salvando os dados de cada tabela localmente.
 """)
 
-# Pasta onde os CSVs gerados são salvos (ajuste se necessário)
 pasta_scraping = os.getcwd()
 
 arquivos_pld = sorted(
