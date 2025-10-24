@@ -105,6 +105,6 @@ Este projeto é de uso educacional e demonstrativo, sem vínculo oficial com a C
 💬 Contato
 
 Desenvolvido por Thaís Dias
-📧 thaishelena.data@gmail.com
 
+📧 thaishelena.data@gmail.com
 💼 https://www.linkedin.com/in/thais-helena-dias/
