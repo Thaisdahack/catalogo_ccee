@@ -20,6 +20,9 @@ Aplicação desenvolvida em Streamlit para navegação, consulta e download de d
 
 💡 Tema claro personalizado e layout responsivo.
 
+🧠 Estrutura do Projeto
+
+
 📁 API/
 ├── 📘 aplicacao_streamlit_demo_api_scrapping.py     # Código principal da aplicação Streamlit  
 ├── 🕷️ scrapping_pld_horario_final.py                 # Script de webscraping do PLD Horário  
@@ -69,6 +72,8 @@ Webscraping automatizado do PLD Horário
 
 Armazenamento de logs de uso e downloads.
 
+🧰 Tecnologias Utilizadas
+
 | 💡 Categoria    | ⚙️ Tecnologia                                |
 | :-------------- | :------------------------------------------- |
 | **Linguagem**   | 🐍 Python 3.11                               |
@@ -76,6 +81,7 @@ Armazenamento de logs de uso e downloads.
 | **Bibliotecas** | 🧮 Pandas • 🌐 Requests • 🕷️ BeautifulSoup4 |
 | **APIs**        | 🔗 CCEE Open Data (CKAN)                     |
 | **Deploy**      | ☁️ Streamlit Cloud                           |
+
 
 
 🧑‍💼 Contexto
