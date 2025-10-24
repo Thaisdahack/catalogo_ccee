@@ -20,15 +20,14 @@ Aplicação desenvolvida em Streamlit para navegação, consulta e download de d
 
 💡 Tema claro personalizado e layout responsivo.
 
-🧠 Estrutura do Projeto
-
 📁 API/
-├── aplicacao_streamlit_demo_api_scrapping.py → Código principal da aplicação Streamlit
-├── scrapping_pld_horario_final.py → Script de webscraping PLD Horário
-├── api_exposicao_financeira_mensal_2025.py → Exemplo de requisição à API da CCEE
-├── lista_datasets_completa.csv → Catálogo com metadados dos datasets
-├── solicitacoes_clientes.csv → Log das solicitações de download
-├── requirements.txt → Dependências da aplicação
+├── 📘 aplicacao_streamlit_demo_api_scrapping.py     # Código principal da aplicação Streamlit  
+├── 🕷️ scrapping_pld_horario_final.py                 # Script de webscraping do PLD Horário  
+├── 🌐 api_exposicao_financeira_mensal_2025.py        # Exemplo de consulta à API da CCEE  
+├── 📄 lista_datasets_completa.csv                    # Catálogo com metadados dos datasets  
+├── 🧾 solicitacoes_clientes.csv                      # Log das solicitações de download  
+├── ⚙️ requirements.txt                               # Dependências da aplicação  
+
 
 
 ⚙️ Instalação e Execução Local
@@ -70,13 +69,14 @@ Webscraping automatizado do PLD Horário
 
 Armazenamento de logs de uso e downloads.
 
-🧰 Tecnologias Utilizadas
-Categoria	Tecnologia
-Linguagem	Python 3.11
-Framework	Streamlit 1.40
-Bibliotecas	Pandas, Requests, BeautifulSoup4
-APIs	CCEE Open Data (CKAN)
-Deploy	Streamlit Cloud
+| 💡 Categoria    | ⚙️ Tecnologia                                |
+| :-------------- | :------------------------------------------- |
+| **Linguagem**   | 🐍 Python 3.11                               |
+| **Framework**   | 📊 Streamlit 1.40                            |
+| **Bibliotecas** | 🧮 Pandas • 🌐 Requests • 🕷️ BeautifulSoup4 |
+| **APIs**        | 🔗 CCEE Open Data (CKAN)                     |
+| **Deploy**      | ☁️ Streamlit Cloud                           |
+
 
 🧑‍💼 Contexto
 
