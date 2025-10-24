@@ -1,5 +1,5 @@
 # ===========================================================
-# 📘 Catálogo de Datasets CCEE - Versão Estável para Deploy
+# 📘 Catálogo de Datasets CCEE + Case Low Code - Versão Final
 # ===========================================================
 
 import streamlit as st
@@ -21,301 +21,383 @@ st.set_page_config(
 )
 
 # =======================================
-# 💅 ESTILO PERSONALIZADO - FUNDO CLARO GERAL
+# 🎛️ MENU LATERAL
+# =======================================
+menu = st.sidebar.radio(
+    "Navegação",
+    [
+        "🏠 Apresentação",
+        "📊 Painéis Power BI",
+        "📚 Sistema Self Service de Dados",
+        "⚙️ Opções Low Code"
+    ]
+)
+
+# =======================================
+# 💅 ESTILO VISUAL GERAL
 # =======================================
 st.markdown("""
 <style>
-    /* ======= FUNDO CLARO ======= */
-    [data-testid="stAppViewContainer"], [data-testid="stApp"], .stDataFrame, .stSelectbox, .stTextInput {
-        background-color: #f9fafc !important;
-        color: #2c3e50 !important;
-    }
-
-    /* ======= TÍTULOS E TEXTOS ======= */
-    h1, h2, h3, label, p, div {
-        color: #1a5276 !important;
-    }
-
-    /* ======= CONTAINER ======= */
-    .block-container {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-    }
-
-    /* ======= BOTÕES ======= */
-    .stButton>button, .stDownloadButton>button {
-        background-color: #2471A3 !important;
-        color: #ffffff !important;
-        border-radius: 8px !important;
-        border: none !important;
-        font-weight: 600 !important;
-        transition: all 0.2s ease-in-out;
-        padding: 0.6rem 1.2rem !important;
-    }
-    .stButton>button:hover, .stDownloadButton>button:hover {
-        background-color: #1A5276 !important;
-        transform: scale(1.02);
-    }
-
-    /* ======= INPUTS ======= */
-    .stTextInput>div>div>input, .stSelectbox>div>div>div {
-        background-color: white !important;
-        color: #2c3e50 !important;
-        border-radius: 8px !important;
-        border: 1px solid #d6dbdf !important;
-    }
-
-    /* ======= DATATABLE ======= */
-    [data-testid="stDataFrame"] table {
-        background-color: #ffffff !important;
-        color: #2c3e50 !important;
-        border-radius: 8px !important;
-    }
-
-    /* ======= BOX INFORMATIVO ======= */
-    .stAlert {
-        border-radius: 8px !important;
-        padding: 1rem !important;
-    }
-
-    /* ======= TÍTULO PRINCIPAL ======= */
-    .main-title {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 1rem;
-    }
+[data-testid="stAppViewContainer"], [data-testid="stApp"], .stDataFrame, .stSelectbox, .stTextInput {
+    background-color: #f9fafc !important;
+    color: #2c3e50 !important;
+}
+h1, h2, h3, label, p, div { color: #1a5276 !important; }
+.stButton>button, .stDownloadButton>button {
+    background-color: #2471A3 !important;
+    color: #ffffff !important;
+    border-radius: 8px !important;
+    border: none !important;
+    font-weight: 600 !important;
+}
+.stButton>button:hover, .stDownloadButton>button:hover {
+    background-color: #1A5276 !important;
+    transform: scale(1.02);
+}
 </style>
 """, unsafe_allow_html=True)
 
-# =======================================
-# 🧭 CABEÇALHO
-# =======================================
-st.markdown("""
-<div class="main-title">
-    <span style="font-size:2em;">📘</span>
-    <h1>Catálogo de Datasets CCEE</h1>
-</div>
-""", unsafe_allow_html=True)
+# ===========================================================
+# 🏠 APRESENTAÇÃO
+# ===========================================================
+if menu == "🏠 Apresentação":
+    st.title("📘 Catálogo e Soluções Low-Code - Case CCEE")
 
-st.markdown("---")
+    st.markdown("""
+    Este aplicativo foi desenvolvido como parte de um **case técnico** para demonstrar a capacidade de integrar 
+    **fontes públicas da CCEE** em soluções **low-code** e **self-service de dados**.
 
-# =======================================
-# 🧾 FORMULÁRIO DO CLIENTE
-# =======================================
-for key in ["dados_cliente_confirmados", "nome", "email", "empresa"]:
-    if key not in st.session_state:
-        st.session_state[key] = None
+    ### 🎯 Objetivos:
+    - Criar um **catálogo automatizado** de datasets da CCEE.  
+    - Demonstrar a **integração via API pública (CKAN)**.  
+    - Exibir uma **prova de conceito** de automação de dados **sem API**, via Power Automate Desktop.  
+    - Consolidar o raciocínio técnico do projeto em um único ambiente Streamlit.
 
-with st.form("form_cliente"):
-    st.markdown("### 👤 Informações do Cliente")
-    nome_input = st.text_input("👤 Nome completo", value=st.session_state.nome or "")
-    email_input = st.text_input("📧 E-mail corporativo", value=st.session_state.email or "")
-    empresa_input = st.text_input("🏢 Empresa", value=st.session_state.empresa or "")
-    enviado = st.form_submit_button("✅ Confirmar dados")
+    ---
 
-if enviado:
-    st.session_state.dados_cliente_confirmados = True
-    st.session_state.nome = nome_input
-    st.session_state.email = email_input
-    st.session_state.empresa = empresa_input
+    🔧 **Tecnologias utilizadas**
+    | Categoria | Ferramenta |
+    |------------|------------|
+    | Linguagem | Python 3.11 |
+    | Framework | Streamlit |
+    | Bibliotecas | Pandas, Requests, BeautifulSoup4 |
+    | APIs | CCEE Open Data (CKAN) |
+    | Low Code | Power BI, Power Automate Desktop |
+    | Deploy | Streamlit Cloud |
+    """)
 
-if not st.session_state.dados_cliente_confirmados:
-    st.info("Por favor, preencha suas informações para acessar os conjuntos de dados.")
-else:
-    nome = st.session_state.nome
-    email = st.session_state.email
-    empresa = st.session_state.empresa
+# ===========================================================
+# 📊 PAINÉIS POWER BI
+# ===========================================================
+elif menu == "📊 Painéis Power BI":
+    st.title("📊 Painéis Power BI - Case CCEE")
 
-    st.success(f"Bem-vindo(a), **{nome}** da **{empresa}**!")
+    st.markdown("""
+    Nesta seção, estão listados os **painéis Power BI** desenvolvidos para o case, com base nas APIs e datasets da CCEE.
+
+    🔹 [Painel 1 - PLD Horário](https://app.powerbi.com/...)  
+    🔹 [Painel 2 - Exposição Financeira](https://app.powerbi.com/...)  
+    🔹 [Painel 3 - Métricas Consolidadas](https://app.powerbi.com/...)  
+
+    (Insira os links públicos dos seus painéis reais aqui 👆)
+    """)
+
+# ===========================================================
+# 📚 SISTEMA SELF SERVICE DE DADOS (CATÁLOGO PRINCIPAL)
+# ===========================================================
+elif menu == "📚 Sistema Self Service de Dados":
+
+    st.title("📚 Sistema Self Service de Dados - Datasets CCEE")
     st.markdown("---")
 
-# =======================================
-# 📦 CARREGAR LISTA DE DATASETS
-# =======================================
-@st.cache_data
-def carregar_dados():
-    df = pd.read_csv("lista_datasets_completa.csv")
-    df["link_original"] = df["link"]
-    df["link"] = df["link"].apply(lambda x: f'<a href="{x}" target="_blank">🔗 Abrir Dataset</a>')
-    return df
+    # =======================================
+    # 🧾 FORMULÁRIO DO CLIENTE
+    # =======================================
+    for key in ["dados_cliente_confirmados", "nome", "email", "empresa"]:
+        if key not in st.session_state:
+            st.session_state[key] = None
 
-df = carregar_dados()
+    with st.form("form_cliente"):
+        st.markdown("### 👤 Informações do Cliente")
+        nome_input = st.text_input("👤 Nome completo", value=st.session_state.nome or "")
+        email_input = st.text_input("📧 E-mail corporativo", value=st.session_state.email or "")
+        empresa_input = st.text_input("🏢 Empresa", value=st.session_state.empresa or "")
+        enviado = st.form_submit_button("✅ Confirmar dados")
 
-# =======================================
-# 🔍 FILTROS DE CONSULTA
-# =======================================
-st.markdown("### 🔍 Filtros de consulta")
+    if enviado:
+        st.session_state.dados_cliente_confirmados = True
+        st.session_state.nome = nome_input
+        st.session_state.email = email_input
+        st.session_state.empresa = empresa_input
 
-nomes_dataset = sorted(df["nome"].dropna().unique())
-dataset_selecionado = st.selectbox(
-    "Buscar dataset pelo nome:",
-    options=[""] + nomes_dataset,
-    index=0
-)
+    if not st.session_state.dados_cliente_confirmados:
+        st.info("Por favor, preencha suas informações para acessar os conjuntos de dados.")
+    else:
+        nome = st.session_state.nome
+        email = st.session_state.email
+        empresa = st.session_state.empresa
 
-if dataset_selecionado:
-    df_filtrado = df[df["nome"].str.contains(dataset_selecionado, case=False, na=False)]
-else:
-    df_filtrado = df.copy()
+        st.success(f"Bem-vindo(a), **{nome}** da **{empresa}**!")
+        st.markdown("---")
 
-ano_selecionado = st.selectbox(
-    "📅 Selecione o ano do dataset:",
-    options=["Todos", "2023", "2024", "2025"],
-    index=0
-)
+        # =======================================
+        # 📦 CARREGAR LISTA DE DATASETS
+        # =======================================
+        @st.cache_data
+        def carregar_dados():
+            df = pd.read_csv("lista_datasets_completa.csv")
+            df["link_original"] = df["link"]
+            df["link"] = df["link"].apply(lambda x: f'<a href="{x}" target="_blank">🔗 Abrir Dataset</a>')
+            return df
 
-if ano_selecionado != "Todos" and "ano" in df_filtrado.columns:
-    df_filtrado = df_filtrado[df_filtrado["ano"] == int(ano_selecionado)]
+        df = carregar_dados()
 
-st.markdown(f"**Total de datasets encontrados:** {len(df_filtrado)}")
-st.markdown("---")
+        # =======================================
+        # 🔍 FILTROS DE CONSULTA
+        # =======================================
+        st.markdown("### 🔍 Filtros de consulta")
 
-# =======================================
-# 📥 DOWNLOAD AUTOMÁTICO
-# =======================================
-st.markdown("### 📥 Baixar Datasets")
+        nomes_dataset = sorted(df["nome"].dropna().unique())
+        dataset_selecionado = st.selectbox("Buscar dataset pelo nome:", options=[""] + nomes_dataset, index=0)
 
-arquivo_solicitacoes = os.path.join(os.getcwd(), "solicitacoes_clientes.csv")
-
-def baixar_dataset_api(resource_id: str, limit: int = 100):
-    try:
-        url = f"https://dadosabertos.ccee.org.br/api/3/action/datastore_search?resource_id={resource_id}&limit={limit}"
-        response = urllib.request.urlopen(url)
-        data = json.loads(response.read())
-        if data.get("success") and len(data["result"]["records"]) > 0:
-            df = pd.DataFrame(data["result"]["records"])
-            csv_data = df.to_csv(index=False, sep=";", encoding="utf-8-sig")
-            return csv_data, f"✅ {len(df)} registros carregados via API."
+        if dataset_selecionado:
+            df_filtrado = df[df["nome"].str.contains(dataset_selecionado, case=False, na=False)]
         else:
-            return None, "⚠️ API retornou sucesso, mas sem registros."
-    except Exception as e:
-        return None, f"❌ Erro ao acessar API: {e}"
+            df_filtrado = df.copy()
 
-def baixar_dataset_csv_direto(link: str):
-    try:
-        r = requests.get(link)
-        r.raise_for_status()
-        return r.content, "✅ Arquivo baixado diretamente do portal."
-    except Exception as e:
-        return None, f"❌ Falha ao baixar CSV direto: {e}"
+        ano_selecionado = st.selectbox("📅 Selecione o ano do dataset:", options=["Todos", "2023", "2024", "2025"], index=0)
+        if ano_selecionado != "Todos" and "ano" in df_filtrado.columns:
+            df_filtrado = df_filtrado[df_filtrado["ano"] == int(ano_selecionado)]
 
-for idx, row in df_filtrado.iterrows():
-    nome_dataset = row["nome"]
-    link_dataset = row["link_original"]
-    resource_id = None
-    if "resource_id=" in link_dataset:
-        resource_id = link_dataset.split("resource_id=")[-1].split("&")[0]
+        st.markdown(f"**Total de datasets encontrados:** {len(df_filtrado)}")
+        st.markdown("---")
 
-    with st.container():
-        col1, col2 = st.columns([4, 1])
-        with col1:
-            st.markdown(f"**{nome_dataset}**  {row['link']}", unsafe_allow_html=True)
-        with col2:
-            if st.button(f"📥 Baixar", key=f"btn_{idx}"):
-                data_atual = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                solicitacao = {
-                    "data": data_atual,
-                    "nome_cliente": nome,
-                    "email": email,
-                    "empresa": empresa,
-                    "dataset": nome_dataset,
-                    "filtro_usado": dataset_selecionado or "Sem filtro",
-                    "ano_selecionado": ano_selecionado
-                }
-                nova_linha = pd.DataFrame([solicitacao])
+        # =======================================
+        # 📥 DOWNLOAD AUTOMÁTICO
+        # =======================================
+        st.markdown("### 📥 Baixar Datasets")
 
-                if os.path.exists(arquivo_solicitacoes):
-                    nova_linha.to_csv(arquivo_solicitacoes, mode="a", index=False, header=False, encoding="utf-8-sig")
+        arquivo_solicitacoes = os.path.join(os.getcwd(), "solicitacoes_clientes.csv")
+
+        def baixar_dataset_api(resource_id: str, limit: int = 100):
+            try:
+                url = f"https://dadosabertos.ccee.org.br/api/3/action/datastore_search?resource_id={resource_id}&limit={limit}"
+                response = urllib.request.urlopen(url)
+                data = json.loads(response.read())
+                if data.get("success") and len(data["result"]["records"]) > 0:
+                    df = pd.DataFrame(data["result"]["records"])
+                    csv_data = df.to_csv(index=False, sep=";", encoding="utf-8-sig")
+                    return csv_data, f"✅ {len(df)} registros carregados via API."
                 else:
-                    nova_linha.to_csv(arquivo_solicitacoes, index=False, header=True, encoding="utf-8-sig")
+                    return None, "⚠️ API retornou sucesso, mas sem registros."
+            except Exception as e:
+                return None, f"❌ Erro ao acessar API: {e}"
 
-                with st.spinner("⏳ Consultando API da CCEE..."):
-                    time.sleep(1)
-                    conteudo, msg = (None, "")
-                    if resource_id:
-                        conteudo, msg = baixar_dataset_api(resource_id)
-                    if not conteudo:
-                        st.warning(msg)
-                        st.info("🔁 Tentando baixar o arquivo direto do portal...")
-                        conteudo, msg = baixar_dataset_csv_direto(link_dataset)
+        def baixar_dataset_csv_direto(link: str):
+            try:
+                r = requests.get(link)
+                r.raise_for_status()
+                return r.content, "✅ Arquivo baixado diretamente do portal."
+            except Exception as e:
+                return None, f"❌ Falha ao baixar CSV direto: {e}"
 
-                if conteudo:
-                    st.success(msg)
-                    st.download_button(
-                        label=f"💾 Salvar {nome_dataset}.csv",
-                        data=conteudo,
-                        file_name=f"{nome_dataset}.csv",
-                        mime="text/csv"
-                    )
-                else:
-                    st.error("❌ Não foi possível obter o dataset de nenhuma forma.")
+        for idx, row in df_filtrado.iterrows():
+            nome_dataset = row["nome"]
+            link_dataset = row["link_original"]
+            resource_id = None
+            if "resource_id=" in link_dataset:
+                resource_id = link_dataset.split("resource_id=")[-1].split("&")[0]
 
-st.markdown("---")
+            with st.container():
+                col1, col2 = st.columns([4, 1])
+                with col1:
+                    st.markdown(f"**{nome_dataset}**  {row['link']}", unsafe_allow_html=True)
+                with col2:
+                    if st.button(f"📥 Baixar", key=f"btn_{idx}"):
+                        data_atual = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                        solicitacao = {
+                            "data": data_atual,
+                            "nome_cliente": nome,
+                            "email": email,
+                            "empresa": empresa,
+                            "dataset": nome_dataset,
+                            "filtro_usado": dataset_selecionado or "Sem filtro",
+                            "ano_selecionado": ano_selecionado
+                        }
+                        nova_linha = pd.DataFrame([solicitacao])
 
-# =======================================
-# 🔬 DEMONSTRAÇÃO: API FUNCIONAL
-# =======================================
-st.markdown("### 🔬 Demonstração: Consulta à API da CCEE")
+                        if os.path.exists(arquivo_solicitacoes):
+                            nova_linha.to_csv(arquivo_solicitacoes, mode="a", index=False, header=False, encoding="utf-8-sig")
+                        else:
+                            nova_linha.to_csv(arquivo_solicitacoes, index=False, header=True, encoding="utf-8-sig")
 
-if st.button("🚀 Consultar dados (PLD Histórico Semanal)"):
-    with st.spinner("⏳ Consultando API da CCEE..."):
-        try:
-            resource_id = "7c90a379-5e98-46ff-a11b-9120bcf81ac4"
-            url = f"https://dadosabertos.ccee.org.br/api/3/action/datastore_search?resource_id={resource_id}&limit=50"
-            response = urllib.request.urlopen(url)
-            data = json.loads(response.read())
+                        with st.spinner("⏳ Consultando API da CCEE..."):
+                            time.sleep(1)
+                            conteudo, msg = (None, "")
+                            if resource_id:
+                                conteudo, msg = baixar_dataset_api(resource_id)
+                            if not conteudo:
+                                st.warning(msg)
+                                st.info("🔁 Tentando baixar o arquivo direto do portal...")
+                                conteudo, msg = baixar_dataset_csv_direto(link_dataset)
 
-            if data.get("success"):
-                df_demo = pd.DataFrame(data["result"]["records"])
-                st.success(f"✅ {len(df_demo)} registros carregados via API da CCEE.")
-                st.dataframe(df_demo.head(10))
+                        if conteudo:
+                            st.success(msg)
+                            st.download_button(
+                                label=f"💾 Salvar {nome_dataset}.csv",
+                                data=conteudo,
+                                file_name=f"{nome_dataset}.csv",
+                                mime="text/csv"
+                            )
+                        else:
+                            st.error("❌ Não foi possível obter o dataset de nenhuma forma.")
+
+        # =======================================
+        # 🔬 DEMONSTRAÇÃO: API FUNCIONAL
+        # =======================================
+        st.markdown("---")
+        st.markdown("### 🔬 Demonstração: Consulta à API da CCEE")
+
+        if st.button("🚀 Consultar dados (PLD Histórico Semanal)"):
+            with st.spinner("⏳ Consultando API da CCEE..."):
+                try:
+                    resource_id = "7c90a379-5e98-46ff-a11b-9120bcf81ac4"
+                    url = f"https://dadosabertos.ccee.org.br/api/3/action/datastore_search?resource_id={resource_id}&limit=50"
+                    response = urllib.request.urlopen(url)
+                    data = json.loads(response.read())
+
+                    if data.get("success"):
+                        df_demo = pd.DataFrame(data["result"]["records"])
+                        st.success(f"✅ {len(df_demo)} registros carregados via API da CCEE.")
+                        st.dataframe(df_demo.head(10))
+                        st.download_button(
+                            label="💾 Baixar CSV da API (exemplo)",
+                            data=df_demo.to_csv(index=False, sep=";", encoding="utf-8-sig"),
+                            file_name="pld_semanal_historico_exemplo.csv",
+                            mime="text/csv"
+                        )
+                    else:
+                        st.error("⚠️ API respondeu, mas não retornou registros.")
+                except Exception as e:
+                    st.error(f"❌ Erro ao consultar API: {e}")
+
+        # =======================================
+        # 🕷️ DEMONSTRAÇÃO: WEBSCRAPING PLD HORÁRIO
+        # =======================================
+        st.markdown("### 🕷️ Demonstração: Webscraping do PLD Horário (CCEE)")
+
+        st.write("""
+        Esta demonstração mostra como o webscraping automatizado coleta os valores do **PLD Horário**
+        diretamente do portal da **CCEE**, salvando os dados em arquivos CSV.
+        """)
+
+        pasta_scraping = os.getcwd()
+        arquivos_pld = sorted(
+            [f for f in os.listdir(pasta_scraping) if f.startswith("pld_horario_") and f.endswith(".csv")],
+            reverse=True
+        )
+
+        if arquivos_pld:
+            arquivo_mais_recente = arquivos_pld[0]
+            st.success(f"📅 Arquivo mais recente encontrado: **{arquivo_mais_recente}**")
+
+            df_pld = pd.read_csv(os.path.join(pasta_scraping, arquivo_mais_recente), sep=";")
+            st.dataframe(df_pld.head(15))
+
+            with open(os.path.join(pasta_scraping, arquivo_mais_recente), "rb") as f:
                 st.download_button(
-                    label="💾 Baixar CSV da API (exemplo)",
-                    data=df_demo.to_csv(index=False, sep=";", encoding="utf-8-sig"),
-                    file_name="pld_semanal_historico_exemplo.csv",
+                    label="💾 Baixar último PLD Horário (CSV)",
+                    data=f,
+                    file_name=arquivo_mais_recente,
                     mime="text/csv"
                 )
-            else:
-                st.error("⚠️ API respondeu, mas não retornou registros.")
-        except Exception as e:
-            st.error(f"❌ Erro ao consultar API: {e}")
+        else:
+            st.warning("⚠️ Nenhum arquivo `pld_horario_*.csv` foi encontrado na pasta do projeto.")
+            st.info("Execute o script `scrapping_pld_horario_final.py` para gerar os dados.")
 
-# =======================================
-# 🕷️ DEMONSTRAÇÃO: WEBSCRAPING PLD HORÁRIO
-# =======================================
-st.markdown("### 🕷️ Demonstração: Webscraping do PLD Horário (CCEE)")
+# ===========================================================
+# ⚙️ OPÇÕES LOW CODE
+# ===========================================================
+elif menu == "⚙️ Opções Low Code":
+    st.title("⚙️ Soluções Low-Code para Automação de Dados")
 
-st.write("""
-Esta demonstração mostra como o webscraping automatizado coleta os valores do **PLD Horário**
-diretamente do portal da **CCEE**, salvando os dados em arquivos CSV.
-""")
+    st.markdown("""
+    Esta seção apresenta duas abordagens complementares para automatizar a entrega de dados ao cliente,
+    considerando fontes **com API pública** e **sem API disponível**.
 
-st.info("""
-⚙️ O processo completo utiliza **Selenium + BeautifulSoup**, abrindo o site da CCEE, 
-clicando nas datas disponíveis e salvando os dados de cada tabela localmente.
-""")
+    ---
 
-pasta_scraping = os.getcwd()
-arquivos_pld = sorted(
-    [f for f in os.listdir(pasta_scraping) if f.startswith("pld_horario_") and f.endswith(".csv")],
-    reverse=True
-)
+    ## 🧩 1️⃣ Aquisição via API (Power BI + Power Query)
 
-if arquivos_pld:
-    arquivo_mais_recente = arquivos_pld[0]
-    st.success(f"📅 Arquivo mais recente encontrado: **{arquivo_mais_recente}**")
+    Esta abordagem é ideal para fontes **com APIs abertas**, como o portal de **dados abertos da CCEE**.  
+    O objetivo é permitir a coleta de múltiplos datasets de forma automatizada.
 
-    df_pld = pd.read_csv(os.path.join(pasta_scraping, arquivo_mais_recente), sep=";")
-    st.dataframe(df_pld.head(15))
+    ```m
+    let
+        fnColetarCCEE = (resource_id as text) =>
+            let
+                url = "https://dadosabertos.ccee.org.br/api/3/action/datastore_search?resource_id=" & resource_id & "&limit=10000",
+                json = Json.Document(Web.Contents(url)),
+                registros = json[result][records],
+                tabela = Table.FromList(registros, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+                expandido = Table.ExpandRecordColumn(tabela, "Column1", Record.FieldNames(registros{0})),
+                tipos = Table.TransformColumnTypes(expandido, List.Transform(Table.ColumnNames(expandido), each {_, type text}))
+            in
+                tipos
+    in
+        fnColetarCCEE
+    ```
 
-    with open(os.path.join(pasta_scraping, arquivo_mais_recente), "rb") as f:
-        st.download_button(
-            label="💾 Baixar último PLD Horário (CSV)",
-            data=f,
-            file_name=arquivo_mais_recente,
-            mime="text/csv"
-        )
-else:
-    st.warning("⚠️ Nenhum arquivo `pld_horario_*.csv` foi encontrado na pasta do projeto.")
-    st.info("Execute o script `scrapping_pld_horario_final.py` para gerar os dados.")
+    **📋 Exemplo de Consulta de Tabelas Específicas:**
+
+    ```m
+    // PLD Horário
+    let
+        Fonte = fnColetarCCEE("7c90a379-5e98-46ff-a11b-9120bcf81ac4")
+    in
+        Fonte
+
+    // Exposição Financeira Mensal
+    let
+        Fonte = fnColetarCCEE("bfba2fcf-ccd5-47a3-86f9-c6a1e8ba8fbf")
+    in
+        Fonte
+    ```
+
+    **✨ Benefícios:**
+    - Automação completa dentro do Power BI  
+    - Atualizações agendadas via Gateway  
+    - Flexibilidade para novos datasets apenas com `resource_id`
+
+    ---
+
+    ## 🕷️ 2️⃣ Aquisição sem API (Power Automate Desktop)
+
+    Quando a fonte **não possui botão de download nem API pública**, utiliza-se um fluxo **RPA (Robotic Process Automation)** no **Power Automate Desktop**.
+
+    **🧩 Etapas do fluxo:**
+    1. Abrir navegador e acessar o site da CCEE.  
+    2. Simular login/navegação automática.  
+    3. Extrair tabela com “Extract data from web page”.  
+    4. Salvar como CSV.  
+    5. Enviar automaticamente ao cliente via Power Automate Web.
+
+    ```
+    Power Automate Cloud → Executa fluxo Desktop → Extrai tabela → Gera CSV → Envia e-mail
+    ```
+
+    **✨ Benefícios:**
+    - Dispensa API  
+    - Automação web robusta  
+    - Entregas programadas por e-mail  
+    - Ideal para dados que só estão disponíveis em páginas dinâmicas
+
+    ---
+
+    ## 🧭 Resumo das Estratégias Low-Code
+
+    | Cenário | Ferramenta | Entrega | Complexidade |
+    |----------|-------------|----------|---------------|
+    | Dados com API | Power BI (Power Query) | Tabelas automatizadas via função personalizada | 🟢 Baixa |
+    | Dados sem API | Power Automate Desktop | Extração RPA e envio automático ao cliente | 🟡 Média |
+    """)
