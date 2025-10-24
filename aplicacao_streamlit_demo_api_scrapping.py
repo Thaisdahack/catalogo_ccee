@@ -116,14 +116,13 @@ if enviado:
 
 if not st.session_state.dados_cliente_confirmados:
     st.info("Por favor, preencha suas informações para acessar os conjuntos de dados.")
-    st.stop()
+else:
+    nome = st.session_state.nome
+    email = st.session_state.email
+    empresa = st.session_state.empresa
 
-nome = st.session_state.nome
-email = st.session_state.email
-empresa = st.session_state.empresa
-
-st.success(f"Bem-vindo(a), **{nome}** da **{empresa}**!")
-st.markdown("---")
+    st.success(f"Bem-vindo(a), **{nome}** da **{empresa}**!")
+    st.markdown("---")
 
 # =======================================
 # 📦 CARREGAR LISTA DE DATASETS
