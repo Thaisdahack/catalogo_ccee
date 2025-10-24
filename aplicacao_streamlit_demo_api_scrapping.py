@@ -1,5 +1,5 @@
 # ===========================================================
-# 📘 Catálogo de Datasets CCEE - Versão Final (Tema Claro Total)
+# 📘 Catálogo de Datasets CCEE - Versão Estável para Deploy
 # ===========================================================
 
 import streamlit as st
@@ -24,19 +24,25 @@ st.set_page_config(
 # 💅 ESTILO PERSONALIZADO - FUNDO CLARO GERAL
 # =======================================
 st.markdown("""
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <style>
+    /* ======= FUNDO CLARO ======= */
     [data-testid="stAppViewContainer"], [data-testid="stApp"], .stDataFrame, .stSelectbox, .stTextInput {
         background-color: #f9fafc !important;
         color: #2c3e50 !important;
     }
+
+    /* ======= TÍTULOS E TEXTOS ======= */
     h1, h2, h3, label, p, div {
         color: #1a5276 !important;
     }
+
+    /* ======= CONTAINER ======= */
     .block-container {
         padding-top: 2rem;
         padding-bottom: 2rem;
     }
+
+    /* ======= BOTÕES ======= */
     .stButton>button, .stDownloadButton>button {
         background-color: #2471A3 !important;
         color: #ffffff !important;
@@ -50,34 +56,34 @@ st.markdown("""
         background-color: #1A5276 !important;
         transform: scale(1.02);
     }
+
+    /* ======= INPUTS ======= */
     .stTextInput>div>div>input, .stSelectbox>div>div>div {
         background-color: white !important;
         color: #2c3e50 !important;
         border-radius: 8px !important;
         border: 1px solid #d6dbdf !important;
     }
-    div[role="listbox"] {
-        background-color: #ffffff !important;
-        color: #2c3e50 !important;
-    }
+
+    /* ======= DATATABLE ======= */
     [data-testid="stDataFrame"] table {
         background-color: #ffffff !important;
         color: #2c3e50 !important;
         border-radius: 8px !important;
     }
+
+    /* ======= BOX INFORMATIVO ======= */
+    .stAlert {
+        border-radius: 8px !important;
+        padding: 1rem !important;
+    }
+
+    /* ======= TÍTULO PRINCIPAL ======= */
     .main-title {
         display: flex;
         align-items: center;
         gap: 12px;
         margin-bottom: 1rem;
-    }
-    .main-title i {
-        font-size: 2em;
-        color: #1a5276;
-    }
-    .stAlert {
-        border-radius: 8px !important;
-        padding: 1rem !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -85,12 +91,12 @@ st.markdown("""
 # =======================================
 # 🧭 CABEÇALHO
 # =======================================
-st.html("""
+st.markdown("""
 <div class="main-title">
-    <i class="bi bi-journal-arrow-down"></i>
+    <span style="font-size:2em;">📘</span>
     <h1>Catálogo de Datasets CCEE</h1>
 </div>
-""")
+""", unsafe_allow_html=True)
 
 st.markdown("---")
 
@@ -102,7 +108,7 @@ for key in ["dados_cliente_confirmados", "nome", "email", "empresa"]:
         st.session_state[key] = None
 
 with st.form("form_cliente"):
-    st.html("<h3><i class='bi bi-person-badge'></i> Informações do Cliente</h3>")
+    st.markdown("### 👤 Informações do Cliente")
     nome_input = st.text_input("👤 Nome completo", value=st.session_state.nome or "")
     email_input = st.text_input("📧 E-mail corporativo", value=st.session_state.email or "")
     empresa_input = st.text_input("🏢 Empresa", value=st.session_state.empresa or "")
@@ -139,7 +145,7 @@ df = carregar_dados()
 # =======================================
 # 🔍 FILTROS DE CONSULTA
 # =======================================
-st.html("<h3><i class='bi bi-funnel'></i> Filtros de consulta</h3>")
+st.markdown("### 🔍 Filtros de consulta")
 
 nomes_dataset = sorted(df["nome"].dropna().unique())
 dataset_selecionado = st.selectbox(
@@ -159,24 +165,20 @@ ano_selecionado = st.selectbox(
     index=0
 )
 
-if ano_selecionado != "Todos":
-    if "ano" in df_filtrado.columns:
-        df_filtrado = df_filtrado[df_filtrado["ano"] == int(ano_selecionado)]
-    else:
-        st.info("⚠️ Nenhuma coluna 'ano' disponível no CSV para filtrar.")
+if ano_selecionado != "Todos" and "ano" in df_filtrado.columns:
+    df_filtrado = df_filtrado[df_filtrado["ano"] == int(ano_selecionado)]
 
 st.markdown(f"**Total de datasets encontrados:** {len(df_filtrado)}")
 st.markdown("---")
 
 # =======================================
-# 📥 DOWNLOAD AUTOMÁTICO (com Spinner)
+# 📥 DOWNLOAD AUTOMÁTICO
 # =======================================
-st.html("<h3><i class='bi bi-cloud-arrow-down'></i> Baixar Datasets</h3>")
+st.markdown("### 📥 Baixar Datasets")
 
 arquivo_solicitacoes = os.path.join(os.getcwd(), "solicitacoes_clientes.csv")
 
 def baixar_dataset_api(resource_id: str, limit: int = 100):
-    """Baixa via API CKAN da CCEE"""
     try:
         url = f"https://dadosabertos.ccee.org.br/api/3/action/datastore_search?resource_id={resource_id}&limit={limit}"
         response = urllib.request.urlopen(url)
@@ -191,7 +193,6 @@ def baixar_dataset_api(resource_id: str, limit: int = 100):
         return None, f"❌ Erro ao acessar API: {e}"
 
 def baixar_dataset_csv_direto(link: str):
-    """Baixa o CSV diretamente"""
     try:
         r = requests.get(link)
         r.raise_for_status()
@@ -219,7 +220,7 @@ for idx, row in df_filtrado.iterrows():
                     "email": email,
                     "empresa": empresa,
                     "dataset": nome_dataset,
-                    "filtro_usado": dataset_selecionado if dataset_selecionado else "Sem filtro",
+                    "filtro_usado": dataset_selecionado or "Sem filtro",
                     "ano_selecionado": ano_selecionado
                 }
                 nova_linha = pd.DataFrame([solicitacao])
@@ -255,12 +256,7 @@ st.markdown("---")
 # =======================================
 # 🔬 DEMONSTRAÇÃO: API FUNCIONAL
 # =======================================
-st.html("<h3><i class='bi bi-diagram-3'></i> Demonstração: Consulta à API da CCEE</h3>")
-
-st.write("""
-Exemplo prático de integração direta com a API da **CCEE**, 
-utilizando o dataset **PLD - Histórico Semanal - 2001 - 2020**.
-""")
+st.markdown("### 🔬 Demonstração: Consulta à API da CCEE")
 
 if st.button("🚀 Consultar dados (PLD Histórico Semanal)"):
     with st.spinner("⏳ Consultando API da CCEE..."):
@@ -288,7 +284,7 @@ if st.button("🚀 Consultar dados (PLD Histórico Semanal)"):
 # =======================================
 # 🕷️ DEMONSTRAÇÃO: WEBSCRAPING PLD HORÁRIO
 # =======================================
-st.html("<h3><i class='bi bi-globe2'></i> Demonstração: Webscraping do PLD Horário (CCEE)</h3>")
+st.markdown("### 🕷️ Demonstração: Webscraping do PLD Horário (CCEE)")
 
 st.write("""
 Esta demonstração mostra como o webscraping automatizado coleta os valores do **PLD Horário**
@@ -301,7 +297,6 @@ clicando nas datas disponíveis e salvando os dados de cada tabela localmente.
 """)
 
 pasta_scraping = os.getcwd()
-
 arquivos_pld = sorted(
     [f for f in os.listdir(pasta_scraping) if f.startswith("pld_horario_") and f.endswith(".csv")],
     reverse=True
