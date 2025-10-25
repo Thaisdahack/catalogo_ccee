@@ -10,6 +10,8 @@ import urllib.request
 import json
 import requests
 import time
+import os
+os.environ["STREAMLIT_WATCHDOG_DISABLED"] = "true"
 
 # =======================================
 # 🚀 CONFIGURAÇÃO INICIAL
@@ -220,7 +222,7 @@ elif menu == "📊 Painéis Power BI":
     🔹 [Painel 2 - Exposição Financeira](https://app.powerbi.com/...)  
     🔹 [Painel 3 - Métricas Consolidadas](https://app.powerbi.com/...)  
 
-    (Insira os links públicos dos seus painéis reais aqui 👆)
+    
     """)
 
 # ===========================================================
