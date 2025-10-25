@@ -1,5 +1,5 @@
 # ===========================================================
-# 📘 Catálogo de Datasets CCEE + Case Low Code - Versão Final
+# 📘 Catálogo de Datasets CCEE + Case Low Code 
 # ===========================================================
 
 import streamlit as st
@@ -22,20 +22,23 @@ st.set_page_config(
 
 
 # =======================================
-# 🎨 MENU LATERAL COM LOGO E RODAPÉ FIXO
+# 🎨 MENU LATERAL COM LOGO CENTRALIZADO E RODAPÉ FIXO
 # =======================================
 with st.sidebar:
     st.markdown("""
         <style>
+        /* ======== SIDEBAR GERAL ======== */
         section[data-testid="stSidebar"] {
             background-color: #0E3B61 !important;
             color: #ffffff !important;
-            padding: 0.8rem 1rem 1.2rem !important;
+            padding: 0.8rem 1rem 1.2rem 1rem !important;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
+            min-height: 100vh;
         }
 
-        /* ===== LOGO ===== */
+        /* ======== LOGO ======== */
         .sidebar-logo {
             display: flex;
             justify-content: center;
@@ -44,36 +47,44 @@ with st.sidebar:
             margin-bottom: 0.6rem;
         }
         .sidebar-logo img {
-            width: 110px;  /* 🔹 logo menor */
+            width: 75px; /* 🔹 tamanho equilibrado */
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        /* ===== TÍTULOS EM BRANCO ===== */
+        /* ======== TÍTULOS (agora alinhados à esquerda) ======== */
         .sidebar-title {
             font-size: 1.35rem !important;
             font-weight: 700 !important;
-            color: #FFFFFF !important;  /* 🔹 branco */
-            text-align: center !important;
-            margin: 0.3rem 0 0.2rem 0 !important;
+            color: #FFFFFF !important;
+            text-align: left !important;   /* 🔹 alinhamento à esquerda */
+            margin: 0.3rem 0 0.1rem 0.5rem !important;
         }
         .sidebar-sub {
             font-size: 0.95rem !important;
-            color: #FFFFFF !important;  /* 🔹 branco */
-            text-align: center !important;
-            margin-bottom: 1rem !important;
+            color: #FFFFFF !important;
+            text-align: left !important;   /* 🔹 alinhamento à esquerda */
+            margin: 0 0 1rem 0.5rem !important;
         }
 
-        /* ===== BOTÕES DO MENU ===== */
+        /* ======== BOTÕES MENU ======== */
+        div[role="radiogroup"] {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch; /* 🔹 ocupa a largura total */
+        }
         div[role="radiogroup"] > label {
             background: transparent !important;
             border: 1.5px solid #5DADE2 !important;
             border-radius: 10px !important;
             color: #FFFFFF !important;
             padding: 0.65rem 0.9rem !important;
-            margin-bottom: 0.6rem !important;
+            margin: 0 0.5rem 0.7rem 0.5rem !important; /* 🔹 alinhamento lateral */
             font-weight: 600 !important;
             transition: all 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
         }
         div[role="radiogroup"] > label:hover {
             border-color: #AED6F1 !important;
@@ -88,12 +99,13 @@ with st.sidebar:
             fill: #FFFFFF !important;
         }
 
-        /* ===== RODAPÉ ===== */
+        /* ======== RODAPÉ (também alinhado à esquerda) ======== */
         .sidebar-footer {
-            text-align: center;
+            text-align: left;
             font-size: 0.85rem;
             color: #A9CCE3;
             margin-top: auto;
+            margin-left: 0.5rem;
             margin-bottom: 0.4rem;
         }
         .sidebar-footer a {
@@ -108,13 +120,19 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
     # LOGO
-    st.markdown('<div class="sidebar-logo"><img src="logo.png"></div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-logo">', unsafe_allow_html=True)
+    try:
+        
+        st.image("logo.png", width=150)  
+    except Exception:
+        st.write(" ")  
+    st.markdown('</div>', unsafe_allow_html=True)
 
-    # TÍTULO
-    st.markdown('<div class="sidebar-title">⚡ Case técnico Way2</div>', unsafe_allow_html=True)
-    st.markdown('<div class="sidebar-sub">Integração Low-Code e Dados Públicos</div>', unsafe_allow_html=True)
+    # TÍTULO E SUBTÍTULO (alinhados à esquerda)
+    st.markdown('<div class="sidebar-title">📈 Case técnico Way2</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-sub">Integração via API e Low Code de Dados Públicos</div>', unsafe_allow_html=True)
 
-    # MENU
+    # MENU DE NAVEGAÇÃO
     menu = st.radio(
         "Navegação",
         ["🏠 Apresentação", "📊 Painéis Power BI", "📚 Sistema Self Service de Dados", "⚙️ Opções Low Code"],
@@ -122,11 +140,17 @@ with st.sidebar:
         index=0
     )
 
-    # RODAPÉ
+    # RODAPÉ FIXO (também alinhado à esquerda)
     st.markdown(
-        '<div class="sidebar-footer">Desenvolvido por <a href="https://www.linkedin.com/in/thais-helena-dias/" target="_blank">Thaís Dias</a></div>',
+        """
+        <div class="sidebar-footer">
+            Desenvolvido por <a href="https://www.linkedin.com/in/thais-helena-dias/" target="_blank">Thaís Dias</a><br>
+            <a href="https://github.com/Thaisdahack/catalogo_ccee" target="_blank">🔗 Repositório no GitHub</a>
+        </div>
+        """,
         unsafe_allow_html=True
     )
+
 
 
 # =======================================
@@ -157,17 +181,18 @@ h1, h2, h3, label, p, div { color: #1a5276 !important; }
 # 🏠 APRESENTAÇÃO
 # ===========================================================
 if menu == "🏠 Apresentação":
-    st.title("📘 Catálogo e Soluções Low-Code - Way2")
+    st.title("📘 Catálogo de dados, Painéis e Soluções Low-Code - Way2")
 
     st.markdown("""
     Este aplicativo foi desenvolvido como parte de um **case técnico** para demonstrar a capacidade de integrar 
-    **fontes públicas da CCEE** em soluções **low-code** e **self-service de dados**.
+    **fontes públicas da CCEE** em soluções **low-code** e **self-service de dados**, assim como painéis desenvolvidos em **Power BI**.
 
     ### 🎯 Objetivos:
     - Criar um **catálogo automatizado** de datasets da CCEE.  
     - Demonstrar a **integração via API pública (CKAN)**.  
     - Exibir uma **prova de conceito** de automação de dados **sem API**, via Power Automate Desktop.  
     - Consolidar o raciocínio técnico do projeto em um único ambiente Streamlit.
+    - Desenvolver painéis em Power BI para atender a demanda do cliente.
 
     ---
 
@@ -176,7 +201,7 @@ if menu == "🏠 Apresentação":
     |------------|------------|
     | Linguagem | Python 3.11 |
     | Framework | Streamlit |
-    | Bibliotecas | Pandas, Requests, BeautifulSoup4 |
+    | Bibliotecas | Pandas, Requests, BeautifulSoup4 | Selenium
     | APIs | CCEE Open Data (CKAN) |
     | Low Code | Power BI, Power Automate Desktop |
     | Deploy | Streamlit Cloud |
