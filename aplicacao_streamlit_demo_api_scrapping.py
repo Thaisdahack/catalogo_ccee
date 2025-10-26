@@ -218,10 +218,8 @@ elif menu == "📊 Painéis Power BI":
     st.markdown("""
     Nesta seção, estão listados os **painéis Power BI** desenvolvidos para o case, com base nas APIs e datasets da CCEE.
 
-    🔹 [Painel 1 - PLD Horário](https://app.powerbi.com/...)  
-    🔹 [Painel 2 - Exposição Financeira](https://app.powerbi.com/...)  
-    🔹 [Painel 3 - Métricas Consolidadas](https://app.powerbi.com/...)  
-
+    🔹 [Painel 1 - Exposição Financeira Mensal](https://app.powerbi.com/view?r=eyJrIjoiZDVmOTZhNWUtYWQ4MS00Yjk3LTgxZjUtOWQ5MzU5MGM1ZDM2IiwidCI6IjJjZjdkNGQ1LWJkMWItNDk1Ni1hY2Y4LTI5OTUzOTliMjE2OCJ9)  
+    🔹 [Painel 2 - Perda RB Horário](https://app.powerbi.com/view?r=eyJrIjoiZjAyN2E2YmEtOTgwOC00NzJmLWJmMWYtYTIzN2RmOTc2MjgxIiwidCI6IjJjZjdkNGQ1LWJkMWItNDk1Ni1hY2Y4LTI5OTUzOTliMjE2OCJ9)  
     
     """)
 
