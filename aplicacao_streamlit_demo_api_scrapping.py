@@ -496,7 +496,7 @@ elif menu == "⚙️ Opções Low Code":
 
     ## 🕷️ 2️⃣ Aquisição sem API (Power Automate Desktop)
 
-    Quando a fonte **não possui botão de download nem API pública**, utiliza-se um fluxo **RPA (Robotic Process Automation)** no **Power Automate Desktop**.
+    Quando a fonte **não possui opção de download ou API pública**, utiliza-se um fluxo **RPA (Robotic Process Automation)** no **Power Automate Desktop**.
 
     **🧩 Etapas do fluxo:**
     1. Abrir navegador e acessar o site da CCEE.  
